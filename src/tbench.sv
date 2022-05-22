@@ -424,7 +424,14 @@ module tbench ();
                             end
                             if (!test) begin
                                 AERIN_TAR_EN = 1'b1;
-                                aer_send(.addr_in(evt_target[7:0]), .addr_out(AERIN_ADDR), .ack(AERIN_ACK), .req(AERIN_REQ));
+								while (AERIN_ACK) wait_ns(1);
+								AERIN_ADDR = evt_target[7:0];
+								wait_ns(1);
+								AERIN_REQ = 1'b1;
+								while (!AERIN_ACK) wait_ns(1);
+								wait_ns(1);
+								AERIN_REQ = 1'b0;
+                                //aer_send(.addr_in(evt_target[7:0]), .addr_out(AERIN_ADDR), .ack(AERIN_ACK), .req(AERIN_REQ));
                                 wait_ns(200);
                                 AERIN_TAR_EN = 1'b0;
                                 wait_ns(100);
@@ -452,7 +459,14 @@ module tbench ();
 
                         end if (evt_neur == -1)
                             break;
-                        aer_send(.addr_in(evt_neur[7:0]), .addr_out(AERIN_ADDR), .ack(AERIN_ACK), .req(AERIN_REQ));
+						while (AERIN_ACK) wait_ns(1);
+						AERIN_ADDR = evt_neur[7:0];
+						wait_ns(1);
+						AERIN_REQ = 1'b1;
+						while (!AERIN_ACK) wait_ns(1);
+						wait_ns(1);
+						AERIN_REQ = 1'b0;
+                        //aer_send(.addr_in(evt_neur[7:0]), .addr_out(AERIN_ADDR), .ack(AERIN_ACK), .req(AERIN_REQ));
                         wait_ns(100);
                     end
 
@@ -544,7 +558,7 @@ module tbench ();
     /***************************
      AER send event
     ***************************/
-    
+    /*****************
     task automatic aer_send (
         input  logic [`M-1:0] addr_in,
         ref    logic [`M-1:0] addr_out,
@@ -559,7 +573,7 @@ module tbench ();
         wait_ns(1);
         req = 1'b0;
     endtask
-    
+    **************************/
     /***************************
      SPI half transaction (for multi-R/W)
     ***************************/

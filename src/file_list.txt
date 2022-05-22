@@ -1,0 +1,10 @@
+lfsr/lfsr_neur_stochround.v
+lfsr/lfsr_noise_neur.v
+lfsr/lfsr_oneur_stochround.v
+lfsr/lfsr_winp_wrec.v
+lfsr/lfsr_wout.v
+reckon.v
+spi_slave.v
+srnn.v
+tbench.sv
+tbench.h
